@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 * {
     margin: 0;
     padding: 0 ;
@@ -6,14 +6,15 @@
 }
 
 .container-fluid, .col-12, .row{
+    /* To avoid unnecessary margin and padding provide by bootstrap */
   padding: 0 !important;
   margin: 0 !important;
 }
 
 
 body {
-    font-family: 'Roboto' ,monospace;
-    font-size: 0.7rem;
+    font-family: 'Inter', 'Roboto' ,monospace;
+    font-size: 0.8rem;
     font-weight: 500;
     color: #000;
     background-color: #fff;
@@ -42,10 +43,11 @@ img {
 }
 
 .leaderboard-table {
+    font-size: 0.65rem;
     border: 4px solid white;
     text-transform: uppercase;
-    width: 90%;           /* Use the full width of the container */
-    border-collapse: collapse
+    width: 90%;
+    border-collapse: collapse;
 }
 
 .leaderboard-table thead {
@@ -59,8 +61,7 @@ thead, tbody,th, tr, td {
 }
 
 thead, td {
-    white-space: normal;        /* Allows text wrapping */
-    /* overflow-wrap: break-word;  Breaks long words if needed */
+    white-space: normal; 
 }
 
 
@@ -92,13 +93,27 @@ li::marker {
     font-variant-numeric: tabular-nums;
 }
 
+@media (max-width: 365px) {
+    body {
+        font-size: 8px;
+    }
+
+    .leaderboard-table{
+        font-size: 8px;
+    }
+}
+
 @media (min-width: 500px) {
 
     body {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 0.8rem;
+        font-size: 1rem;
+    }
+
+    .leaderboard-table{
+        font-size: 1rem;
     }
 
     img {
