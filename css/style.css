@@ -74,6 +74,10 @@ th:nth-child(4), td:nth-child(4){
     margin-bottom: 50px;
 }
 
+ol{
+    width: 90%;
+}
+
 @media (min-width: 500px) {
 
     body {
