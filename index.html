@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Refer and Earn! - BharatNXT</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon.svg" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-MZMT8ZVZV0");
+  </script>
+
+  <script>
+    // Google Analytics setup
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-MZMT8ZVZV0");
+
+    function gtag_report_conversion(url) {
+      gtag("event", "conversion", {
+        send_to: "AW-11033144263/h2B_CM-h1IUZEMfXgY0p",
+        event_callback: function () {
+          if (url) {
+            window.location = url;
+          }
+        },
+      });
+      return false;
+    }
+
+    function formatCurrency(amount) {
+      return `₹${amount.toLocaleString("en-IN")}`;
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+    import {
+      getFirestore,
+      doc,
+      onSnapshot,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBGU66tz9RqRkPUCzuQo_WPqkdlRJ5BXPc",
+      authDomain: "bnxtstaging.firebaseapp.com",
+      databaseURL:
+        "https://bnxtstaging-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "bnxtstaging",
+      storageBucket: "bnxtstaging.appspot.com",
+      messagingSenderId: "930298277788",
+      appId: "1:930298277788:web:85ebf0aa19cbaf1c6a2259",
+      measurementId: "G-3ENFNZCLPP",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const docRef = doc(db, "dynamic_page", "dynamic-leaderboard-example");
+
+    console.log(docRef);
+
+    onSnapshot(docRef, (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        updateDOM(data);
+        console.log(data);
+      } else {
+        console.log("No such document!");
+      }
+    });
+
+    async function updateDOM(data) {
+
+      const page = document.querySelector(".page");
+      const headerLogoImg = document.querySelector("header .logo");
+      const heroSectionImg = document.querySelector(".hero-section-img");
+      const leaderboardHeader = document.querySelector("#leaderboard-header");
+      const podiumImg = document.querySelector(".podium-section-img");
+      const footerBtnImg = document.querySelector(".footer-btn-section-img");
+
+      //Updating DOM
+      try {
+        document.body.style.color = data.fontColorHexCode;
+        headerLogoImg.src = data.headerLogo;
+        heroSectionImg.src = data.heroSectionImg;
+        leaderboardHeader.textContent = data.leaderboardHeaderTxt;
+        podiumImg.src = data.podiumImg;
+        footerBtnImg.src = data.footerBtnImg;
+        if (
+          data.linearGradientBackgroundColors?.startColor &&
+          data.linearGradientBackgroundColors?.endColor
+        ) {
+          page.style.background = `linear-gradient(to right, ${data.linearGradientBackgroundColors?.startColor}, ${data.linearGradientBackgroundColors?.endColor})`;
+        } else {
+          page.style.background = data.bgColorHexCode;
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+      await populateLeaderboard(data.winnersHighlightColor);
+    }
+
+    function getParamfromUrl(documentId) {
+      const docIdParam = new URLSearchParams(window.location.search);
+      return docIdParam.get(documentId);
+    }
+
+    function convertTimestampToDate(timestamp) {
+      if (!timestamp || typeof timestamp.seconds !== "number") {
+        return "Invalid Timestamp";
+      }
+      const date = new Date(timestamp.seconds * 1000);
+      const formattedDate = date.toISOString().split('T')[0];
+      return formattedDate;
+    }
+
+    function maskUniqueId(id) {
+      let idString = id.toString();
+      const maskedId = idString[0] + 'X'.repeat(idString.length - 2) + idString[idString.length - 1];
+      return maskedId;
+    }
+
+    console.log(maskUniqueId(120))
+
+
+    async function populateLeaderboard(winnersHighlightColor) {
+      try {
+        // Show the loader
+        document.getElementById("loader").style.display = "block";
+        document.querySelector(".leaderboard").style.display = "none";
+
+        let cohortId;
+        let startDate;
+        let endDate;
+        let totalWinners;
+        let thresholdAmount;
+
+
+        const documentId = getParamfromUrl("documentId");
+
+        const docRef = doc(db, "offer_leaderboard_config", documentId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          let data = docSnap.data();
+          cohortId = data.cohortId;
+          startDate = convertTimestampToDate(data.startDate);
+          endDate = convertTimestampToDate(data.endDate);
+          totalWinners = data.totalWinners;
+          thresholdAmount = data.thresholdAmount;
+          console.log(cohortId, startDate, endDate, totalWinners, thresholdAmount)
+          const response = await fetch(
+            "https://staging.bharatnxt.in/bnxt_report/admin_dashboard/getLeaderboardByCohort",
+            {
+              method: "POST",
+              mode: "cors",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                cohortId: cohortId,
+                startDate: startDate,
+                endDate: endDate,
+              }),
+            }
+          );
+          const result = await response.json();
+
+          if (result.status === 200 && result.data) {
+            const tbody = document.querySelector(".leaderboard table tbody");
+            tbody.innerHTML = "";
+
+            result.data.forEach((entry, index) => {
+              const row = document.createElement("tr");
+
+              // Calculate if row should be highlighted
+              const isTop3 = index < totalWinners;
+              // const isOver11Lakhs = entry.total_payee_amount >= thresholdAmount;
+              const isOver11Lakhs = entry.total_payee_amount >= 30;
+              const shouldHighlight = isTop3 && isOver11Lakhs;
+
+              row.innerHTML = `
+                    <td>#${entry.rank}</td>
+                    <td class="name">${entry.name}</td>
+                    <td>${maskUniqueId(entry.user_id)}</td>
+                    <td>${formatCurrency(entry.total_payee_amount)}</td>
+                `;
+              tbody.appendChild(row);
+
+              if (shouldHighlight) {
+                const tableRows = row.querySelectorAll(`td`);
+                tableRows.forEach((tableRow, index) => {
+                  tableRow.style.color =
+                    winnersHighlightColor || "#FFC54A";
+                  if(index%2 === 1){
+                    tableRow.style.textShadow = `#000 1px 4px 6px`;
+                  }
+                });
+              }
+            });
+          }
+          document.getElementById("loader").style.display = "none";
+          document.querySelector(".leaderboard").style.display = "block";
+        }
+      } catch (error) {
+        console.error("Error fetching leaderboard data:", error);
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="page">
+    <section class="header" style="background-color: #fff;">
+      <div class="container-fluid">
+        <header class="row text-center">
+          <a href="https://bharatnxt.in/" class="d-flex justify-content-center">
+            <img class="logo" width="100%" src="" alt="BharatNxt Logo Image" /></a>
+        </header>
+      </div>
+    </section>
+    <section class="main">
+      <div class="container-fluid">
+        <article class="hero-section">
+          <div class="row">
+            <div class="col-12 text-center img-container">
+              <img class="hero-section-img" src="" alt="Hero Section image" />
+            </div>
+          </div>
+        </article>
+        <article class="leaderboard-section">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h1 id="leaderboard-header" class="text-uppercase"></h1>
+            </div>
+            <!-- Loader -->
+            <div id="loader" class="col-12 text-center" style="display: none">
+              <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <!-- Leaderboard -->
+            <div class="col-12">
+              <div class="leaderboard d-flex justify-content-center">
+                <table class="leaderboard-table">
+                  <colgroup>
+                    <col style="width: 15%;">
+                    <col style="width: 35%;">
+                    <col style="width: 25%;">
+                    <col style="width: 25%;">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Name</th>
+                      <th>UNIQUE ID</th>
+                      <th>Transaction Amt.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Table body will be populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="podium-section">
+          <div class="row">
+            <div class="col-12 text-center podium img-container">
+              <img class="podium-section-img" src="" alt="Podium image" />
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="footer">
+      <div class="container-fluid">
+        <article class="tnc-section">
+          <div class="row tnc-section">
+            <div class="col-12">
+              <h2 class="text-center">Terms and Conditions</h2>
+              <ol class="">
+                <li>
+                  Only the Top 5 highest transacting users, transacting above
+                  ₹7.5L or more will be eligible for the rewards.
+                </li>
+                <li>
+                  BharatNXT reserves the right to make amendments to the
+                  programme at a notice of 7 days.
+                </li>
+                <li>
+                  Users agree to comply with all terms & conditions of BharatNXT
+                  by participating in this contest.
+                </li>
+                <li>BharatNXT’s decision incase of disputes will be final.</li>
+                <li>
+                  To be eligible for rewards users need to complete all the
+                  targets from 10th October 2024 to 31st October 2024, any
+                  transaction before 10th October and post 31st October 2024
+                  will not be considered.
+                </li>
+                <li>
+                  All the rewards will be credited to users by 30th November
+                  2024.
+                </li>
+                <li>
+                  User can complete the targets cumulatively till 31st October
+                  2024.
+                </li>
+                <li>
+                  The user will only receive the rewards associated with the
+                  targets achieved by 31st October 2024.
+                </li>
+                <li>
+                  In case of a tie between winners, there will be a lucky draw
+                  system to select one winner from the tie.
+                </li>
+                <li>Iphone 16 given as a reward will be of 128GB.</li>
+                <li>
+                  Rewards earned may be subject to TDS (Tax Deducted at Source)
+                  as per applicable tax laws.
+                </li>
+                <li>
+                  BharatNXT will deduct TDS, if applicable, before crediting or
+                  dispatching the rewards, which may reduce the actual value of
+                  the reward received.
+                </li>
+                <li>Final Winners will be announced on November 11, 2024.</li>
+              </ol>
+            </div>
+          </div>
+        </article>
+        <article class="footer-btn-section">
+          <footer class="row">
+            <div class="col-12 text-center">
+              <a class="w-100 img-container" href="https://bharatnxt.page.link/BusinessPayeeBottomSheet">
+                <img class="footer-btn-section-img" src="" alt="Footer Btn Image" />
+              </a>
+            </div>
+          </footer>
+        </article>
+      </div>
+  </section>
+  </div>
+</body>
+
+
+</html>

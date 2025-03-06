@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900");
+@import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
+* {
+    margin: 0;
+    padding: 0 ;
+    box-sizing: border-box;
+}
+
+.container-fluid, .col-12, .row{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    letter-spacing: 0.1em;
+}
+
+.page {
+    max-width: 550px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.logo {
+    width: 100%;
+}
+
+.hero-section, .leaderboard-section, .podium-section{
+    margin-bottom: 30px;
+}
+
+#leaderboard-header {
+    margin: 10px auto;
+}
+
+.leaderboard-table {
+    border: 4px solid white;
+    text-transform: uppercase;
+    width: 90%;           /* Use the full width of the container */
+    border-collapse: collapse
+}
+
+.leaderboard-table thead {
+    border-bottom: 4px solid white;;
+}
+
+thead, tbody,th, tr, td {
+    margin: 10px;
+    padding: 10px;
+      
+}
+
+thead, td {
+    white-space: normal;        /* Allows text wrapping */
+    /* overflow-wrap: break-word;  Breaks long words if needed */
+}
+
+
+th:nth-child(4), td:nth-child(4){
+    text-align: right;
+}
+
+.main{
+    margin-top: -1px;
+    margin-bottom: 50px;
+}
+
+@media (min-width: 500px) {
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+    }
+
+    img {
+        max-width: 550px ;
+    }
+}
