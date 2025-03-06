@@ -91,6 +91,8 @@
       const leaderboardHeader = document.querySelector("#leaderboard-header");
       const podiumImg = document.querySelector(".podium-section-img");
       const footerBtnImg = document.querySelector(".footer-btn-section-img");
+      const tncHeader = document.querySelector(".tnc-header");
+      const tncList = document.querySelector("ol.tnc");
 
       //Updating DOM
       try {
@@ -100,6 +102,14 @@
         leaderboardHeader.textContent = data.leaderboardHeaderTxt;
         podiumImg.src = data.podiumImg;
         footerBtnImg.src = data.footerBtnImg;
+        tncHeader.textContent = data.tncHeaderText;
+        const termsAndCondition = data.tnc;
+        termsAndCondition.forEach((tnc, index)=>{
+          console.log(`${index+1}. Term -> ${tnc}`);
+          const list = document.createElement("li");
+          list.innerHTML = tnc;
+          tncList.appendChild(list)
+        })
         if (
           data.linearGradientBackgroundColors?.startColor &&
           data.linearGradientBackgroundColors?.endColor
@@ -120,13 +130,13 @@
       return docIdParam.get(documentId);
     }
 
-    function convertTimestampToDate(timestamp) {
-      if (!timestamp || typeof timestamp.seconds !== "number") {
-        return "Invalid Timestamp";
-      }
-      const date = new Date(timestamp.seconds * 1000);
-      const formattedDate = date.toISOString().split('T')[0];
-      return formattedDate;
+    function convertTimestampToDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedLocalDate = `${year}-${month}-${day}`
+      return formattedLocalDate;
+
     }
 
     function maskUniqueId(id) {
@@ -134,6 +144,7 @@
       const maskedId = idString[0] + 'X'.repeat(idString.length - 2) + idString[idString.length - 1];
       return maskedId;
     }
+
 
     console.log(maskUniqueId(120))
 
@@ -151,7 +162,7 @@
         let thresholdAmount;
 
 
-        const documentId = getParamfromUrl("documentId");
+        const documentId = getParamfromUrl("cohort");
 
         const docRef = doc(db, "offer_leaderboard_config", documentId);
         const docSnap = await getDoc(docRef);
@@ -159,8 +170,8 @@
         if (docSnap.exists()) {
           let data = docSnap.data();
           cohortId = data.cohortId;
-          startDate = convertTimestampToDate(data.startDate);
-          endDate = convertTimestampToDate(data.endDate);
+          startDate = convertTimestampToDate(data.startDate.toDate());
+          endDate = convertTimestampToDate(data.endDate.toDate());
           totalWinners = data.totalWinners;
           thresholdAmount = data.thresholdAmount;
           console.log(cohortId, startDate, endDate, totalWinners, thresholdAmount)
@@ -188,8 +199,6 @@
 
             result.data.forEach((entry, index) => {
               const row = document.createElement("tr");
-
-              // Calculate if row should be highlighted
               const isTop3 = index < totalWinners;
               // const isOver11Lakhs = entry.total_payee_amount >= thresholdAmount;
               const isOver11Lakhs = entry.total_payee_amount >= 30;
@@ -289,54 +298,8 @@
         <article class="tnc-section">
           <div class="row tnc-section">
             <div class="col-12">
-              <h2 class="text-center">Terms and Conditions</h2>
+              <h2 class="tnc-header text-center">Terms and Conditions</h2>
               <ol class="tnc d-flex flex-column justify-content-center">
-                <!-- <li>
-                  Only the Top 5 highest transacting users, transacting above
-                  ₹7.5L or more will be eligible for the rewards.
-                </li>
-                <li>
-                  BharatNXT reserves the right to make amendments to the
-                  programme at a notice of 7 days.
-                </li>
-                <li>
-                  Users agree to comply with all terms & conditions of BharatNXT
-                  by participating in this contest.
-                </li>
-                <li>BharatNXT’s decision incase of disputes will be final.</li>
-                <li>
-                  To be eligible for rewards users need to complete all the
-                  targets from 10th October 2024 to 31st October 2024, any
-                  transaction before 10th October and post 31st October 2024
-                  will not be considered.
-                </li>
-                <li>
-                  All the rewards will be credited to users by 30th November
-                  2024.
-                </li>
-                <li>
-                  User can complete the targets cumulatively till 31st October
-                  2024.
-                </li>
-                <li>
-                  The user will only receive the rewards associated with the
-                  targets achieved by 31st October 2024.
-                </li>
-                <li>
-                  In case of a tie between winners, there will be a lucky draw
-                  system to select one winner from the tie.
-                </li>
-                <li>Iphone 16 given as a reward will be of 128GB.</li>
-                <li>
-                  Rewards earned may be subject to TDS (Tax Deducted at Source)
-                  as per applicable tax laws.
-                </li>
-                <li>
-                  BharatNXT will deduct TDS, if applicable, before crediting or
-                  dispatching the rewards, which may reduce the actual value of
-                  the reward received.
-                </li>
-                <li>Final Winners will be announced on November 11, 2024.</li> -->
               </ol>
             </div>
           </div>
@@ -354,6 +317,4 @@
   </section>
   </div>
 </body>
-
-
 </html>

@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900");
-@import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 * {
     margin: 0;
     padding: 0 ;
@@ -13,7 +12,7 @@
 
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto' ,monospace;
     font-size: 0.6rem;
     font-weight: 500;
     color: #000;
@@ -74,8 +73,23 @@ th:nth-child(4), td:nth-child(4){
     margin-bottom: 50px;
 }
 
-ol{
-    width: 90%;
+.tnc-header, ol{
+    width: 95%;      
+    margin: 0 auto;
+}
+
+
+ol {
+    font-variant-numeric: tabular-nums;
+}
+
+li {
+    padding: 5px 5px;
+}
+
+li::marker {
+    padding: 5px 5px;
+    font-variant-numeric: tabular-nums;
 }
 
 @media (min-width: 500px) {
