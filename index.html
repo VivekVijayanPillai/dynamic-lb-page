@@ -211,9 +211,9 @@
                     <td>#${entry.rank}</td>
                     <td class="name">${entry.name}</td>
                     <td>${maskUniqueId(entry.user_id)}</td>
-                    <td>10000000</td>
+                    <td>${formatCurrency(entry.total_payee_amount)}</td>
                     `;
-                    // <td>${formatCurrency(entry.total_payee_amount)}</td>
+                    
               tbody.appendChild(row);
 
               if (shouldHighlight) {
