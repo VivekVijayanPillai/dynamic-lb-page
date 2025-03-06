@@ -59,6 +59,11 @@ thead, tbody,th, tr, td {
       
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+}
+
 thead, td {
     white-space: normal; 
 }
@@ -103,6 +108,9 @@ li::marker {
         justify-content: center;
         align-items: center;
         font-size: 12px;
+    }
+    h1, h2, h3, h4, h5, h6{
+        font-size: 1.6rem;
     }
 
     img {
