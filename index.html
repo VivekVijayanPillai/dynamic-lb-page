@@ -66,12 +66,32 @@
       measurementId: "G-3ENFNZCLPP",
     };
 
+    function getParamfromUrl(paramName) {
+      const docIdParam = new URLSearchParams(window.location.search);
+      return docIdParam.get(paramName);
+    }
+
+    function convertTimestampToDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedLocalDate = `${year}-${month}-${day}`
+      return formattedLocalDate;
+
+    }
+
+    function maskUniqueId(id) {
+      let idString = id.toString();
+      const maskedId = idString[0] + 'X'.repeat(idString.length - 2) + idString[idString.length - 1];
+      return maskedId;
+    }
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const docRef = doc(db, "dynamic_page", "dynamic-leaderboard-example");
+    const pageDataDocId = getParamfromUrl("pageData")
 
-    console.log(docRef);
+    const docRef = doc(db, "dynamic_page", pageDataDocId);
 
     onSnapshot(docRef, (doc) => {
       if (doc.exists()) {
@@ -93,6 +113,7 @@
       const footerBtnImg = document.querySelector(".footer-btn-section-img");
       const tncHeader = document.querySelector(".tnc-header");
       const tncList = document.querySelector("ol.tnc");
+      const footerBtnRedirect = document.querySelector(".footer-btn")
 
       //Updating DOM
       try {
@@ -102,10 +123,10 @@
         leaderboardHeader.textContent = data.leaderboardHeaderTxt;
         podiumImg.src = data.podiumImg;
         footerBtnImg.src = data.footerBtnImg;
+        footerBtnRedirect.href = data.footerBtnRedirectionUrl
         tncHeader.textContent = data.tncHeaderText;
         const termsAndCondition = data.tnc;
         termsAndCondition.forEach((tnc, index)=>{
-          console.log(`${index+1}. Term -> ${tnc}`);
           const list = document.createElement("li");
           list.innerHTML = tnc;
           tncList.appendChild(list)
@@ -125,25 +146,7 @@
       await populateLeaderboard(data.winnersHighlightColor);
     }
 
-    function getParamfromUrl(documentId) {
-      const docIdParam = new URLSearchParams(window.location.search);
-      return docIdParam.get(documentId);
-    }
-
-    function convertTimestampToDate(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-      const day = String(date.getDate()).padStart(2, '0');
-      const formattedLocalDate = `${year}-${month}-${day}`
-      return formattedLocalDate;
-
-    }
-
-    function maskUniqueId(id) {
-      let idString = id.toString();
-      const maskedId = idString[0] + 'X'.repeat(idString.length - 2) + idString[idString.length - 1];
-      return maskedId;
-    }
+    
 
 
     console.log(maskUniqueId(120))
@@ -308,7 +311,7 @@
         <article class="footer-btn-section">
           <footer class="row">
             <div class="col-12 text-center">
-              <a class="w-100 img-container" href="https://bharatnxt.page.link/BusinessPayeeBottomSheet">
+              <a class="footer-btn w-100 img-container" href="https://bharatnxt.page.link/BusinessPayeeBottomSheet">
                 <img class="footer-btn-section-img" src="" alt="Footer Btn Image" />
               </a>
             </div>
