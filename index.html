@@ -97,7 +97,6 @@
       if (doc.exists()) {
         const data = doc.data();
         updateDOM(data);
-        console.log(data);
       } else {
         console.log("No such document!");
       }
@@ -146,11 +145,6 @@
       await populateLeaderboard(data.winnersHighlightColor);
     }
 
-    
-
-
-    console.log(maskUniqueId(120))
-
 
     async function populateLeaderboard(winnersHighlightColor) {
       try {
@@ -177,7 +171,6 @@
           endDate = convertTimestampToDate(data.endDate.toDate());
           totalWinners = data.totalWinners;
           thresholdAmount = data.thresholdAmount;
-          console.log(cohortId, startDate, endDate, totalWinners, thresholdAmount)
           const response = await fetch(
             "https://staging.bharatnxt.in/bnxt_report/admin_dashboard/getLeaderboardByCohort",
             {
