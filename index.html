@@ -128,10 +128,10 @@
         tncHeader.textContent = data.tncHeaderText;
         const termsAndCondition = data.tnc;
         tncList.innerHTML = "";
-        termsAndCondition.forEach((tnc, index)=>{
-            const list = document.createElement("li");
-            list.innerHTML = tnc;
-            tncList.appendChild(list)
+        termsAndCondition.forEach((tnc, index) => {
+          const list = document.createElement("li");
+          list.innerHTML = tnc;
+          tncList.appendChild(list)
         })
         if (
           data.linearGradientBackgroundColors?.startColor &&
@@ -145,8 +145,7 @@
       } catch (error) {
         console.log(error);
       }
-      await populateLeaderboard(data.winnersHighlightColor, data.offer_leaderboard_config_docName
-);
+      await populateLeaderboard(data.winnersHighlightColor, data.offer_leaderboard_config_docName);
     }
 
 
@@ -208,7 +207,7 @@
                     <td>${maskUniqueId(entry.user_id)}</td>
                     <td>${formatCurrency(entry.total_payee_amount)}</td>
                     `;
-                    
+
               tbody.appendChild(row);
 
               if (shouldHighlight) {
@@ -216,7 +215,7 @@
                 tableRows.forEach((tableRow, index) => {
                   tableRow.style.color =
                     winnersHighlightColor || "#FFC54A";
-                  if(index%2 === 1){
+                  if (index % 2 === 1) {
                     tableRow.style.textShadow = `#000 1px 4px 6px`;
                   }
                 });
@@ -313,7 +312,8 @@
           </footer>
         </article>
       </div>
-  </section>
+    </section>
   </div>
 </body>
+
 </html>
