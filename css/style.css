@@ -31,10 +31,6 @@ img {
   max-width: 100%;
 }
 
-.logo {
-  width: 100%;
-}
-
 .hero-section,
 .leaderboard-section,
 .podium-section {
@@ -105,7 +101,6 @@ li {
 }
 
 li::marker {
-  padding: 5px 5px;
   font-variant-numeric: tabular-nums;
 }
 
