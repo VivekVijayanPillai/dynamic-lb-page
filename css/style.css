@@ -57,10 +57,10 @@ img {
   border-bottom: 2px solid white;
 }
 
-.leaderboard-table td:nth-child(3) {
+/* .leaderboard-table td:nth-child(3) {
   white-space: normal;
   word-break: break-all;
-}
+} */
 
 thead,
 tbody,
