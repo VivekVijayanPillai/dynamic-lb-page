@@ -99,6 +99,7 @@
       if (doc.exists()) {
         const data = doc.data();
         updateDOM(data);
+        console.log(data);
       } else {
         console.log("No such document!");
       }
@@ -241,8 +242,10 @@
     <section class="header">
       <div class="container-fluid">
         <header class="row text-center">
-          <a href="https://bharatnxt.in/">
-            <img class="logo" width="100%" src="" alt="BharatNxt Logo Image" /></a>
+          <div class="col-12">
+            <a style="display: block;" class="w-100" href="https://bharatnxt.in/">
+              <img class="w-100 logo" src="" alt="BharatNxt Logo Image" /></a>
+          </div>
         </header>
       </div>
     </section>
