@@ -54,7 +54,7 @@ img {
 }
 
 .leaderboard-table thead{
-  border-bottom: 2px solid white !important;
+  border-bottom: 2px solid white;
 }
 
 .leaderboard-table td:nth-child(3) {
