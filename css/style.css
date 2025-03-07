@@ -31,6 +31,7 @@ img {
   max-width: 100%;
 }
 
+
 .hero-section,
 .leaderboard-section,
 .podium-section {
@@ -48,8 +49,19 @@ img {
   border-collapse: collapse;
 }
 
-.leaderboard-table thead {
-  border-bottom: 4px solid white;
+.leaderboard-table tr {
+    border-bottom: 2px solid white;
+}
+
+
+.leaderboard-table td, .leaderboard-table th {
+    border-right: 2px solid white;
+    border-left: 2px solid white;
+}
+
+.leaderboard-table td:nth-child(3){
+    white-space: normal;
+    word-break: break-all;
 }
 
 thead,
