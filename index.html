@@ -89,6 +89,8 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+
+
     const pageDataDocId = getParamfromUrl("pageData")
 
     const docRef = doc(db, "dynamic_page", pageDataDocId);
@@ -125,10 +127,11 @@
         footerBtnRedirect.href = data.footerBtnRedirectionUrl
         tncHeader.textContent = data.tncHeaderText;
         const termsAndCondition = data.tnc;
+        tncList.innerHTML = "";
         termsAndCondition.forEach((tnc, index)=>{
-          const list = document.createElement("li");
-          list.innerHTML = tnc;
-          tncList.appendChild(list)
+            const list = document.createElement("li");
+            list.innerHTML = tnc;
+            tncList.appendChild(list)
         })
         if (
           data.linearGradientBackgroundColors?.startColor &&
@@ -142,11 +145,12 @@
       } catch (error) {
         console.log(error);
       }
-      await populateLeaderboard(data.winnersHighlightColor);
+      await populateLeaderboard(data.winnersHighlightColor, data.offer_leaderboard_config_docName
+);
     }
 
 
-    async function populateLeaderboard(winnersHighlightColor) {
+    async function populateLeaderboard(winnersHighlightColor, offer_leaderboard_config_docName) {
       try {
         // Show the loader
         document.getElementById("loader").style.display = "block";
@@ -159,9 +163,7 @@
         let thresholdAmount;
 
 
-        const documentId = getParamfromUrl("cohort");
-
-        const docRef = doc(db, "offer_leaderboard_config", documentId);
+        const docRef = doc(db, "offer_leaderboard_config", offer_leaderboard_config_docName);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
