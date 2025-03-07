@@ -109,6 +109,7 @@
       const page = document.querySelector(".page");
       const headerLogoImg = document.querySelector("header .logo");
       const heroSectionImg = document.querySelector(".hero-section-img");
+      const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
       const leaderboardHeader = document.querySelector("#leaderboard-header");
       const podiumImg = document.querySelector(".podium-section-img");
       const footerBtnImg = document.querySelector(".footer-btn-section-img");
@@ -121,6 +122,9 @@
         document.body.style.color = data.fontColorHexCode;
         headerLogoImg.src = data.headerLogo;
         heroSectionImg.src = data.heroSectionImg;
+        headings.forEach((heading) => {
+          heading.style.color = data.headingColorHexCode;
+        });
         leaderboardHeader.textContent = data.leaderboardHeaderTxt;
         podiumImg.src = data.podiumImg;
         footerBtnImg.src = data.footerBtnImg;
