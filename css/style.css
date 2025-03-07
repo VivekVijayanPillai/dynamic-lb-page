@@ -49,15 +49,10 @@ img {
   border-collapse: collapse;
 }
 
-.leaderboard-table tr {
+.leaderboard-table thead {
     border-bottom: 2px solid white;
 }
 
-
-.leaderboard-table td, .leaderboard-table th {
-    border-right: 2px solid white;
-    border-left: 2px solid white;
-}
 
 .leaderboard-table td:nth-child(3){
     white-space: normal;
@@ -117,6 +112,21 @@ li::marker {
 }
 
 /* Media Queries */
+
+@media (max-width: 355px) {
+  body {
+    font-size: 8px;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+    
+}
 
 @media (min-width: 500px) {
   body {
