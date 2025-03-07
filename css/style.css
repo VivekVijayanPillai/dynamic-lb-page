@@ -30,11 +30,10 @@ img {
   max-width: 100%;
 }
 
-.logo{
-    width: 100%;
-    object-fit: cover;
+.logo {
+  width: 100%;
+  object-fit: cover;
 }
-
 
 .hero-section,
 .leaderboard-section,
@@ -54,13 +53,12 @@ img {
 }
 
 .leaderboard-table thead {
-    border-bottom: 2px solid white;
+  border-bottom: 2px solid white;
 }
 
-
-.leaderboard-table td:nth-child(3){
-    white-space: normal;
-    word-break: break-all;
+.leaderboard-table td:nth-child(3) {
+  white-space: normal;
+  word-break: break-all;
 }
 
 thead,
@@ -130,7 +128,6 @@ li::marker {
   h6 {
     font-size: 1rem;
   }
-    
 }
 
 @media (min-width: 500px) {

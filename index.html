@@ -1,326 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Refer and Earn! - BharatNXT</title>
-  <link rel="icon" type="image/x-icon" href="public/favicon.svg" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-    gtag("config", "G-MZMT8ZVZV0");
-  </script>
-
-  <script>
-    // Google Analytics setup
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-    gtag("config", "G-MZMT8ZVZV0");
-
-    function gtag_report_conversion(url) {
-      gtag("event", "conversion", {
-        send_to: "AW-11033144263/h2B_CM-h1IUZEMfXgY0p",
-        event_callback: function () {
-          if (url) {
-            window.location = url;
-          }
-        },
-      });
-      return false;
-    }
-
-    function formatCurrency(amount) {
-      return `₹${amount.toLocaleString("en-IN")}`;
-    }
-  </script>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-    import {
-      getFirestore,
-      doc,
-      onSnapshot,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBGU66tz9RqRkPUCzuQo_WPqkdlRJ5BXPc",
-      authDomain: "bnxtstaging.firebaseapp.com",
-      databaseURL:
-        "https://bnxtstaging-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "bnxtstaging",
-      storageBucket: "bnxtstaging.appspot.com",
-      messagingSenderId: "930298277788",
-      appId: "1:930298277788:web:85ebf0aa19cbaf1c6a2259",
-      measurementId: "G-3ENFNZCLPP",
-    };
-
-    function getParamfromUrl(paramName) {
-      const docIdParam = new URLSearchParams(window.location.search);
-      return docIdParam.get(paramName);
-    }
-
-    function convertTimestampToDate(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-      const day = String(date.getDate()).padStart(2, '0');
-      const formattedLocalDate = `${year}-${month}-${day}`
-      return formattedLocalDate;
-
-    }
-
-    function maskUniqueId(id) {
-      let idString = id.toString();
-      const maskedId = idString[0] + 'X'.repeat(idString.length - 2) + idString[idString.length - 1];
-      return maskedId;
-    }
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-
-
-    const pageDataDocId = getParamfromUrl("pageData")
-
-    const docRef = doc(db, "dynamic_page", pageDataDocId);
-
-    onSnapshot(docRef, (doc) => {
-      if (doc.exists()) {
-        const data = doc.data();
-        updateDOM(data);
-        console.log(data);
-      } else {
-        console.log("No such document!");
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Refer and Earn! - BharatNXT</title>
+    <link rel="icon" type="image/x-icon" href="public/favicon.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
-    });
+      gtag("js", new Date());
+      gtag("config", "G-MZMT8ZVZV0");
+    </script>
 
-    async function updateDOM(data) {
-
-      const page = document.querySelector(".page");
-      const headerLogoImg = document.querySelector("header .logo");
-      const heroSectionImg = document.querySelector(".hero-section-img");
-      const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
-      const leaderboardHeader = document.querySelector("#leaderboard-header");
-      const podiumImg = document.querySelector(".podium-section-img");
-      const footerBtnImg = document.querySelector(".footer-btn-section-img");
-      const tncHeader = document.querySelector(".tnc-header");
-      const tncList = document.querySelector("ol.tnc");
-      const footerBtnRedirect = document.querySelector(".footer-btn")
-
-      //Updating DOM
-      try {
-        document.body.style.color = data.fontColorHexCode;
-        headerLogoImg.src = data.headerLogo;
-        heroSectionImg.src = data.heroSectionImg;
-        headings.forEach((heading) => {
-          heading.style.color = data.headingColorHexCode;
-        });
-        leaderboardHeader.textContent = data.leaderboardHeaderTxt;
-        podiumImg.src = data.podiumImg;
-        footerBtnImg.src = data.footerBtnImg;
-        footerBtnRedirect.href = data.footerBtnRedirectionUrl
-        tncHeader.textContent = data.tncHeaderText;
-        const termsAndCondition = data.tnc;
-        tncList.innerHTML = "";
-        termsAndCondition.forEach((tnc, index) => {
-          const list = document.createElement("li");
-          list.innerHTML = tnc;
-          tncList.appendChild(list)
-        })
-        if (
-          data.linearGradientBackgroundColors?.startColor &&
-          data.linearGradientBackgroundColors?.endColor
-        ) {
-          page.style.background = `linear-gradient(to right, ${data.linearGradientBackgroundColors?.startColor}, ${data.linearGradientBackgroundColors?.endColor})`;
-        } else {
-          page.style.background = data.bgColorHexCode;
-        }
-
-      } catch (error) {
-        console.log(error);
+    <script>
+      // Google Analytics setup
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
-      await populateLeaderboard(data.winnersHighlightColor, data.offer_leaderboard_config_docName);
-    }
+      gtag("js", new Date());
+      gtag("config", "G-MZMT8ZVZV0");
 
-
-    async function populateLeaderboard(winnersHighlightColor, offer_leaderboard_config_docName) {
-      try {
-        // Show the loader
-        document.getElementById("loader").style.display = "block";
-        document.querySelector(".leaderboard").style.display = "none";
-
-        let cohortId;
-        let startDate;
-        let endDate;
-        let totalWinners;
-        let thresholdAmount;
-
-
-        const docRef = doc(db, "offer_leaderboard_config", offer_leaderboard_config_docName);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          let data = docSnap.data();
-          cohortId = data.cohortId;
-          startDate = convertTimestampToDate(data.startDate.toDate());
-          endDate = convertTimestampToDate(data.endDate.toDate());
-          totalWinners = data.totalWinners;
-          thresholdAmount = data.thresholdAmount;
-          const response = await fetch(
-            "https://staging.bharatnxt.in/bnxt_report/admin_dashboard/getLeaderboardByCohort",
-            {
-              method: "POST",
-              mode: "cors",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify({
-                cohortId: cohortId,
-                startDate: startDate,
-                endDate: endDate,
-              }),
+      function gtag_report_conversion(url) {
+        gtag("event", "conversion", {
+          send_to: "AW-11033144263/h2B_CM-h1IUZEMfXgY0p",
+          event_callback: function () {
+            if (url) {
+              window.location = url;
             }
+          },
+        });
+        return false;
+      }
+
+      function formatCurrency(amount) {
+        return `₹${amount.toLocaleString("en-IN")}`;
+      }
+    </script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+      import {
+        getFirestore,
+        doc,
+        onSnapshot,
+        getDoc,
+      } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBGU66tz9RqRkPUCzuQo_WPqkdlRJ5BXPc",
+        authDomain: "bnxtstaging.firebaseapp.com",
+        databaseURL:
+          "https://bnxtstaging-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "bnxtstaging",
+        storageBucket: "bnxtstaging.appspot.com",
+        messagingSenderId: "930298277788",
+        appId: "1:930298277788:web:85ebf0aa19cbaf1c6a2259",
+        measurementId: "G-3ENFNZCLPP",
+      };
+
+      function getParamfromUrl(paramName) {
+        const docIdParam = new URLSearchParams(window.location.search);
+        return docIdParam.get(paramName);
+      }
+
+      function convertTimestampToDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+        const day = String(date.getDate()).padStart(2, "0");
+        const formattedLocalDate = `${year}-${month}-${day}`;
+        return formattedLocalDate;
+      }
+
+      function maskUniqueId(id) {
+        let idString = id.toString();
+        const maskedId =
+          idString[0] +
+          "X".repeat(idString.length - 2) +
+          idString[idString.length - 1];
+        return maskedId;
+      }
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      const pageDataDocId = getParamfromUrl("pageData");
+
+      const docRef = doc(db, "dynamic_page", pageDataDocId);
+
+      onSnapshot(docRef, (doc) => {
+        if (doc.exists()) {
+          const data = doc.data();
+          updateDOM(data);
+          console.log(data);
+        } else {
+          console.log("No such document!");
+        }
+      });
+
+      async function updateDOM(data) {
+        const page = document.querySelector(".page");
+        const headerLogoImg = document.querySelector("header .logo");
+        const heroSectionImg = document.querySelector(".hero-section-img");
+        const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+        const leaderboardHeader = document.querySelector("#leaderboard-header");
+        const podiumImg = document.querySelector(".podium-section-img");
+        const footerBtnImg = document.querySelector(".footer-btn-section-img");
+        const tncHeader = document.querySelector(".tnc-header");
+        const tncList = document.querySelector("ol.tnc");
+        const footerBtnRedirect = document.querySelector(".footer-btn");
+
+        //Updating DOM
+        try {
+          document.body.style.color = data.fontColorHexCode;
+          headerLogoImg.src = data.headerLogo;
+          heroSectionImg.src = data.heroSectionImg;
+          headings.forEach((heading) => {
+            heading.style.color = data.headingColorHexCode;
+          });
+          leaderboardHeader.textContent = data.leaderboardHeaderTxt;
+          podiumImg.src = data.podiumImg;
+          footerBtnImg.src = data.footerBtnImg;
+          footerBtnRedirect.href = data.footerBtnRedirectionUrl;
+          tncHeader.textContent = data.tncHeaderText;
+          const termsAndCondition = data.tnc;
+          tncList.innerHTML = "";
+          termsAndCondition.forEach((tnc, index) => {
+            const list = document.createElement("li");
+            list.innerHTML = tnc;
+            tncList.appendChild(list);
+          });
+          if (
+            data.linearGradientBackgroundColors?.startColor &&
+            data.linearGradientBackgroundColors?.endColor
+          ) {
+            page.style.background = `linear-gradient(to right, ${data.linearGradientBackgroundColors?.startColor}, ${data.linearGradientBackgroundColors?.endColor})`;
+          } else {
+            page.style.background = data.bgColorHexCode;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        await populateLeaderboard(
+          data.winnersHighlightColor,
+          data.offer_leaderboard_config_docName
+        );
+      }
+
+      async function populateLeaderboard(
+        winnersHighlightColor,
+        offer_leaderboard_config_docName
+      ) {
+        try {
+          // Show the loader
+          document.getElementById("loader").style.display = "block";
+          document.querySelector(".leaderboard").style.display = "none";
+
+          let cohortId;
+          let startDate;
+          let endDate;
+          let totalWinners;
+          let thresholdAmount;
+
+          const docRef = doc(
+            db,
+            "offer_leaderboard_config",
+            offer_leaderboard_config_docName
           );
-          const result = await response.json();
+          const docSnap = await getDoc(docRef);
 
-          if (result.status === 200 && result.data) {
-            const tbody = document.querySelector(".leaderboard table tbody");
-            tbody.innerHTML = "";
+          if (docSnap.exists()) {
+            let data = docSnap.data();
+            cohortId = data.cohortId;
+            startDate = convertTimestampToDate(data.startDate.toDate());
+            endDate = convertTimestampToDate(data.endDate.toDate());
+            totalWinners = data.totalWinners;
+            thresholdAmount = data.thresholdAmount;
+            const response = await fetch(
+              "https://staging.bharatnxt.in/bnxt_report/admin_dashboard/getLeaderboardByCohort",
+              {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify({
+                  cohortId: cohortId,
+                  startDate: startDate,
+                  endDate: endDate,
+                }),
+              }
+            );
+            const result = await response.json();
 
-            result.data.forEach((entry, index) => {
-              const row = document.createElement("tr");
-              const isTop3 = index < totalWinners;
-              // const isOver11Lakhs = entry.total_payee_amount >= thresholdAmount;
-              const isOver11Lakhs = entry.total_payee_amount >= 30;
-              const shouldHighlight = isTop3 && isOver11Lakhs;
+            if (result.status === 200 && result.data) {
+              const tbody = document.querySelector(".leaderboard table tbody");
+              tbody.innerHTML = "";
 
-              row.innerHTML = `
+              result.data.forEach((entry, index) => {
+                const row = document.createElement("tr");
+                const isTop3 = index < totalWinners;
+                // const isOver11Lakhs = entry.total_payee_amount >= thresholdAmount;
+                const isOver11Lakhs = entry.total_payee_amount >= 30;
+                const shouldHighlight = isTop3 && isOver11Lakhs;
+
+                row.innerHTML = `
                     <td>#${entry.rank}</td>
                     <td class="name">${entry.name}</td>
                     <td>${maskUniqueId(entry.user_id)}</td>
                     <td>${formatCurrency(entry.total_payee_amount)}</td>
                     `;
 
-              tbody.appendChild(row);
+                tbody.appendChild(row);
 
-              if (shouldHighlight) {
-                const tableRows = row.querySelectorAll(`td`);
-                tableRows.forEach((tableRow, index) => {
-                  tableRow.style.color =
-                    winnersHighlightColor || "#FFC54A";
-                  if (index % 2 === 1) {
-                    tableRow.style.textShadow = `#000 1px 4px 6px`;
-                  }
-                });
-              }
-            });
+                if (shouldHighlight) {
+                  const tableRows = row.querySelectorAll(`td`);
+                  tableRows.forEach((tableRow, index) => {
+                    tableRow.style.color = winnersHighlightColor || "#FFC54A";
+                    if (index % 2 === 1) {
+                      tableRow.style.textShadow = `#000 1px 4px 6px`;
+                    }
+                  });
+                }
+              });
+            }
+            document.getElementById("loader").style.display = "none";
+            document.querySelector(".leaderboard").style.display = "block";
           }
-          document.getElementById("loader").style.display = "none";
-          document.querySelector(".leaderboard").style.display = "block";
+        } catch (error) {
+          console.error("Error fetching leaderboard data:", error);
         }
-      } catch (error) {
-        console.error("Error fetching leaderboard data:", error);
       }
-    }
-  </script>
-</head>
+    </script>
+  </head>
 
-<body>
-  <div class="page">
-    <section class="header">
-      <div class="container-fluid">
-        <header class="row text-center">
-          <div class="col-12">
-            <a style="display: block;" class="w-100" href="https://bharatnxt.in/">
-              <img class="w-100 logo" src="" alt="BharatNxt Logo Image" /></a>
-          </div>
-        </header>
-      </div>
-    </section>
-    <section class="main">
-      <div class="container-fluid">
-        <article class="hero-section">
-          <div class="row">
-            <div class="col-12 text-center img-container">
-              <img class="hero-section-img" src="" alt="Hero Section image" />
-            </div>
-          </div>
-        </article>
-        <article class="leaderboard-section">
-          <div class="row">
-            <div class="col-12 text-center">
-              <h1 id="leaderboard-header" class="text-uppercase"></h1>
-            </div>
-            <!-- Loader -->
-            <div id="loader" class="col-12 text-center" style="display: none">
-              <div class="spinner-border text-light" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>
-            <!-- Leaderboard -->
+  <body>
+    <div class="page">
+      <section class="header">
+        <div class="container-fluid">
+          <header class="row text-center">
             <div class="col-12">
-              <div class="leaderboard d-flex justify-content-center">
-                <table class="leaderboard-table">
-                  <thead>
-                    <tr>
-                      <th>Rank</th>
-                      <th>Name</th>
-                      <th>UNIQUE ID</th>
-                      <th>Transaction Amt.</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Table body will be populated dynamically -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </article>
-        <article class="podium-section">
-          <div class="row">
-            <div class="col-12 text-center podium img-container">
-              <img class="podium-section-img" src="" alt="Podium image" />
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-    <section class="footer">
-      <div class="container-fluid">
-        <article class="tnc-section">
-          <div class="row tnc-section">
-            <div class="col-12">
-              <h2 class="tnc-header text-center">Terms and Conditions</h2>
-              <ol class="tnc d-flex flex-column justify-content-center">
-              </ol>
-            </div>
-          </div>
-        </article>
-        <article class="footer-btn-section">
-          <footer class="row">
-            <div class="col-12 text-center">
-              <a class="footer-btn w-100 img-container" href="https://bharatnxt.page.link/BusinessPayeeBottomSheet">
-                <img class="footer-btn-section-img" src="" alt="Footer Btn Image" />
+              <a
+                style="display: block"
+                class="w-100"
+                href="https://bharatnxt.in/"
+              >
+                <img class="w-100 logo" src="" alt="BharatNxt Logo Image" />
               </a>
             </div>
-          </footer>
-        </article>
-      </div>
-    </section>
-  </div>
-</body>
-
+          </header>
+        </div>
+      </section>
+      <section class="main">
+        <div class="container-fluid">
+          <article class="hero-section">
+            <div class="row">
+              <div class="col-12 text-center img-container">
+                <img class="hero-section-img" src="" alt="Hero Section image" />
+              </div>
+            </div>
+          </article>
+          <article class="leaderboard-section">
+            <div class="row">
+              <div class="col-12 text-center">
+                <h1 id="leaderboard-header" class="text-uppercase"></h1>
+              </div>
+              <!-- Loader -->
+              <div id="loader" class="col-12 text-center" style="display: none">
+                <div class="spinner-border text-light" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+              <!-- Leaderboard -->
+              <div class="col-12">
+                <div class="leaderboard d-flex justify-content-center">
+                  <table class="leaderboard-table">
+                    <thead>
+                      <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>UNIQUE ID</th>
+                        <th>Transaction Amt.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Table body will be populated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="podium-section">
+            <div class="row">
+              <div class="col-12 text-center podium img-container">
+                <img class="podium-section-img" src="" alt="Podium image" />
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="footer">
+        <div class="container-fluid">
+          <article class="tnc-section">
+            <div class="row tnc-section">
+              <div class="col-12">
+                <h2 class="tnc-header text-center">Terms and Conditions</h2>
+                <ol class="tnc d-flex flex-column justify-content-center"></ol>
+              </div>
+            </div>
+          </article>
+          <article class="footer-btn-section">
+            <footer class="row">
+              <div class="col-12 text-center">
+                <a
+                  class="footer-btn w-100 img-container"
+                  href="https://bharatnxt.page.link/BusinessPayeeBottomSheet"
+                >
+                  <img
+                    class="footer-btn-section-img"
+                    src=""
+                    alt="Footer Btn Image"
+                  />
+                </a>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </section>
+    </div>
+  </body>
 </html>
