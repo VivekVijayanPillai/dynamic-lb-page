@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +15,7 @@
 }
 
 body {
-  font-family: "Inter", "Roboto", monospace;
+  font-family: "Roboto", "Inter", monospace;
   font-size: 10px;
   font-weight: 500;
   color: #000;
@@ -37,25 +38,45 @@ img {
 
 .hero-section,
 .leaderboard-section,
-.podium-section {
-  margin-bottom: 30px;
+.podium-section 
+{
+  margin-bottom: 20px;
 }
 
 #leaderboard-header {
   margin: 10px auto;
 }
 
-
 .leaderboard-table {
   width: 90%;
   border: 4px solid white;
   text-transform: uppercase;
-  border-radius: 20px;
 }
 
-.leaderboard-table thead{
+.leaderboard-table caption {
+  color: white;
+  caption-side: top;
+  text-align: right;
+  font-size: 0.5rem;
+}
+
+.leaderboard-table caption .label {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.leaderboard-table caption .winners-highlight-color {
+  height: 0.5rem;
+  width: 0.5rem;
+  display: inline-block;
+  outline: 0.5px solid white;
+}
+
+.leaderboard-table thead {
   border-bottom: 2px solid white;
 }
+
 
 /* .leaderboard-table td:nth-child(3) {
   white-space: normal;
@@ -67,8 +88,13 @@ tbody,
 th,
 tr,
 td {
-  margin: 10px;
-  padding: 10px;
+  padding: 0.6rem;
+}
+
+
+.winner-indicator-msg {
+  font-weight: 200;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 h1,
@@ -77,9 +103,30 @@ h3,
 h4,
 h5,
 h6 {
-  font-size: 1.3rem;
   font-weight: 700;
   text-transform: uppercase;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+h4,
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: 0.8rem;
 }
 
 thead,
@@ -97,7 +144,10 @@ td:nth-child(4) {
   margin-bottom: 50px;
 }
 
-.tnc-header,
+.tnc-header {
+  cursor: pointer;
+}
+
 ol {
   width: 95%;
   margin: 0 auto;
@@ -115,19 +165,41 @@ li::marker {
   font-variant-numeric: tabular-nums;
 }
 
+.tnc-section {
+  width: 90%;
+  margin: 20px auto;
+}
+
+.tnc-section h6 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tnc-btn{
+  display: grid;
+  grid-template-columns: 0.92fr 0.08fr;
+  border: 1px solid white;
+}
+
+.open-close-icon{
+  border-left: 1px solid white;
+}
+
+.tnc-svg svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.tnc-div {
+  border: 1px solid white;
+  border-top: none;
+}
 /* Media Queries */
 
 @media (max-width: 355px) {
   body {
     font-size: 8px;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: 1rem;
   }
 }
 
@@ -137,14 +209,6 @@ li::marker {
     justify-content: center;
     align-items: center;
     font-size: 12px;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: 1.6rem;
   }
 
   img {

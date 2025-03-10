@@ -57,17 +57,6 @@
         getDoc,
       } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyBGU66tz9RqRkPUCzuQo_WPqkdlRJ5BXPc",
-        authDomain: "bnxtstaging.firebaseapp.com",
-        databaseURL:
-          "https://bnxtstaging-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "bnxtstaging",
-        storageBucket: "bnxtstaging.appspot.com",
-        messagingSenderId: "930298277788",
-        appId: "1:930298277788:web:85ebf0aa19cbaf1c6a2259",
-        measurementId: "G-3ENFNZCLPP",
-      };
 
       function getParamfromUrl(paramName) {
         const docIdParam = new URLSearchParams(window.location.search);
@@ -91,11 +80,56 @@
         return maskedId;
       }
 
+      //DOM elements
+
+      const page = document.querySelector(".page");
+      const headerLogoImg = document.querySelector("header .logo");
+      const heroSectionImg = document.querySelector(".hero-section-img");
+      const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+      const leaderboardHeader = document.querySelector("#leaderboard-header");
+      const podiumImg = document.querySelector(".podium-section-img");
+      const footerBtnImg = document.querySelector(".footer-btn-section-img");
+      const tncHeader = document.querySelector(".tnc-header");
+      const tncBtnSvg = document.querySelector(".tnc-btn-svg");
+      const tncList = document.querySelector("ol.tnc");
+      const tncDiv = document.querySelector(".tnc-div");
+      const footerBtnRedirect = document.querySelector(".footer-btn");
+      const winnersHighlightLabel = document.querySelector(
+        ".winners-highlight-color"
+      );
+      const tncBtn = document.querySelector(".tnc-btn");
+
+      let showTnCDiv = false;
+      tncDiv.style.display = showTnCDiv ? "block" : "none";
+
+      //Terms and Condition Toggle
+
+      tncBtn.addEventListener("click", () => {
+        showTnCDiv = !showTnCDiv;
+        if (showTnCDiv) {
+          tncDiv.style.display = "block";
+          tncBtnSvg.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="#eee" viewBox="0 -960 960 960"><path d="m280-400 200-200 200 200H280Z"/></svg>`;
+        } else {
+          tncDiv.style.display = "none";
+          tncBtnSvg.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="#eee" viewBox="0 -960 960 960"><path d="M480-360 280-560h400L480-360Z"/></svg>`;
+        }
+      });
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBGU66tz9RqRkPUCzuQo_WPqkdlRJ5BXPc",
+        authDomain: "bnxtstaging.firebaseapp.com",
+        databaseURL:
+          "https://bnxtstaging-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "bnxtstaging",
+        storageBucket: "bnxtstaging.appspot.com",
+        messagingSenderId: "930298277788",
+        appId: "1:930298277788:web:85ebf0aa19cbaf1c6a2259",
+        measurementId: "G-3ENFNZCLPP",
+      };
+
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-
       const pageDataDocId = getParamfromUrl("pageData");
-
       const docRef = doc(db, "dynamic_page", pageDataDocId);
 
       onSnapshot(docRef, (doc) => {
@@ -106,35 +140,25 @@
           console.log("No such document!");
         }
       });
-
+      
       async function updateDOM(data) {
-
-        document.title = data.pageTitle;
-
-        const page = document.querySelector(".page");
-        const headerLogoImg = document.querySelector("header .logo");
-        const heroSectionImg = document.querySelector(".hero-section-img");
-        const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
-        const leaderboardHeader = document.querySelector("#leaderboard-header");
-        const podiumImg = document.querySelector(".podium-section-img");
-        const footerBtnImg = document.querySelector(".footer-btn-section-img");
-        const tncHeader = document.querySelector(".tnc-header");
-        const tncList = document.querySelector("ol.tnc");
-        const footerBtnRedirect = document.querySelector(".footer-btn");
-
-        //Updating DOM
         try {
           document.body.style.color = data.fontColorHexCode;
+          document.title = data.pageTitle;
           headerLogoImg.src = data.headerLogo;
           heroSectionImg.src = data.heroSectionImg;
           headings.forEach((heading) => {
             heading.style.color = data.headingColorHexCode;
           });
           leaderboardHeader.textContent = data.leaderboardHeaderTxt;
+          winnersHighlightLabel.style.backgroundColor =
+            data.winnersHighlightColor;
           podiumImg.src = data.podiumImg;
           footerBtnImg.src = data.footerBtnImg;
           footerBtnRedirect.href = data.footerBtnRedirectionUrl;
           tncHeader.textContent = data.tncHeaderText;
+          const upDownSvg = tncBtnSvg.querySelector("svg");
+          upDownSvg.style.fill = data.fontColorHexCode;
           const termsAndCondition = data.tnc;
           tncList.innerHTML = "";
           termsAndCondition.forEach((tnc, index) => {
@@ -155,13 +179,17 @@
         }
         await populateLeaderboard(
           data.winnersHighlightColor,
-          data.offer_leaderboard_config_docName
+          data.offer_leaderboard_config_docName,
+          data.winnersZoneMessage,
+          data.noWinnersZoneMessage
         );
       }
 
       async function populateLeaderboard(
         winnersHighlightColor,
-        offer_leaderboard_config_docName
+        offer_leaderboard_config_docName,
+        winnersZoneMessage,
+        noWinnersZoneMessage
       ) {
         try {
           // Show the loader
@@ -205,6 +233,7 @@
               }
             );
             const result = await response.json();
+            let winnersCount = 0;
 
             if (result.status === 200 && result.data) {
               const tbody = document.querySelector(".leaderboard table tbody");
@@ -213,7 +242,8 @@
               result.data.forEach((entry, index) => {
                 const row = document.createElement("tr");
                 const isTop3 = index < totalWinners;
-                const isOver11Lakhs = entry.total_payee_amount >= thresholdAmount;
+                const isOver11Lakhs =
+                  entry.total_payee_amount >= thresholdAmount;
                 const shouldHighlight = isTop3 && isOver11Lakhs;
 
                 row.innerHTML = `
@@ -226,16 +256,38 @@
                 tbody.appendChild(row);
 
                 if (shouldHighlight) {
+                  winnersCount++;
                   const tableRows = row.querySelectorAll(`td`);
                   tableRows.forEach((tableRow, index) => {
                     tableRow.style.color = winnersHighlightColor || "#FFC54A";
-                    if (index % 2 === 1) {
-                      tableRow.style.textShadow = `#000 1px 4px 10px`;
-                    }
                   });
                 }
               });
             }
+            const table = document.querySelector(".leaderboard table");
+            let newCell;
+            if (winnersCount > 0) {
+              const newRow = table.insertRow(winnersCount + 1);
+              newCell = newRow.insertCell(0);
+              newCell.innerHTML = `
+                <div class="d-flex justify-content-evenly align-items-center">
+                  <span class="winner-indicator-msg">${winnersZoneMessage}</span>
+                </div>
+              `;
+            } else {
+              const newRow = table.insertRow(1);
+              newCell = newRow.insertCell(0);
+              newCell.innerHTML = `
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                  <span class="winner-indicator-msg">${noWinnersZoneMessage}</span>
+                  <span class="winner-indicator-msg">No winners yet!<span>
+                </div>
+              `;
+            }
+
+            newCell.colSpan = 4;
+            newCell.style.textAlign = "center";
+
             document.getElementById("loader").style.display = "none";
             document.querySelector(".leaderboard").style.display = "block";
           }
@@ -277,16 +329,20 @@
               <div class="col-12 text-center">
                 <h1 id="leaderboard-header" class="text-uppercase"></h1>
               </div>
-              <!-- Loader -->
-              <div id="loader" class="col-12 text-center" style="display: none">
+              <div id="loader" class="col-12 text-center">
                 <div class="spinner-border text-light" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </div>
-              <!-- Leaderboard -->
               <div class="col-12">
                 <div class="leaderboard d-flex justify-content-center">
                   <table class="leaderboard-table">
+                    <caption>
+                      <div class="label">
+                        <span>* Winners are highlighted by &nbsp;</span>
+                        <div class="winners-highlight-color"></div>
+                      </div>
+                    </caption>
                     <thead>
                       <tr>
                         <th>Rank</th>
@@ -315,10 +371,26 @@
       <section class="footer">
         <div class="container-fluid">
           <article class="tnc-section">
-            <div class="row tnc-section">
+            <div class="row">
               <div class="col-12">
-                <h2 class="tnc-header text-center">Terms and Conditions</h2>
-                <ol class="tnc d-flex flex-column justify-content-center"></ol>
+                <div class="tnc-btn">
+                  <h6 class="tnc-header text-center"></h6>
+                  <span class="open-close-icon">
+                    <div class="tnc-btn-svg">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 -960 960 960"
+                      >
+                        <path d="M480-360 280-560h400L480-360Z" />
+                      </svg>
+                    </div>
+                  </span>
+                </div>
+                <div class="tnc-div">
+                  <ol
+                    class="tnc d-flex flex-column justify-content-center"
+                  ></ol>
+                </div>
               </div>
             </div>
           </article>
