@@ -99,7 +99,7 @@
       );
       const tncBtn = document.querySelector(".tnc-btn");
 
-      let showTnCDiv = false;
+      let showTnCDiv = true;
       tncDiv.style.display = showTnCDiv ? "block" : "none";
 
       //Terms and Condition Toggle
@@ -153,6 +153,12 @@
           leaderboardHeader.textContent = data.leaderboardHeaderTxt;
           winnersHighlightLabel.style.backgroundColor =
             data.winnersHighlightColor;
+          if(data.podiumImg){
+            podiumImg.src = data.podiumImg;  
+          }
+          else {
+            document.querySelector(".podium-section").remove()
+          }
           podiumImg.src = data.podiumImg;
           footerBtnImg.src = data.footerBtnImg;
           footerBtnRedirect.href = data.footerBtnRedirectionUrl;
@@ -280,7 +286,6 @@
               newCell.innerHTML = `
                 <div class="d-flex flex-column justify-content-center align-items-center">
                   <span class="winner-indicator-msg">${noWinnersZoneMessage}</span>
-                  <span class="winner-indicator-msg">No winners yet!<span>
                 </div>
               `;
             }
@@ -305,7 +310,6 @@
           <header class="row text-center">
             <div class="col-12">
               <a
-                style="display: block"
                 class="w-100"
                 href="https://bharatnxt.in/"
               >
@@ -320,7 +324,7 @@
           <article class="hero-section">
             <div class="row">
               <div class="col-12 text-center img-container">
-                <img class="hero-section-img" src="" alt="Hero Section image" />
+                <img class="hero-section-img w-100" src="" alt="Hero Section image" />
               </div>
             </div>
           </article>
