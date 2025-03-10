@@ -1,18 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Rest CSS */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* To avoid unnecessary margin and padding provide by bootstrap */
 .container-fluid,
 .col-12,
 .row {
-  /* To avoid unnecessary margin and padding provide by bootstrap */
   padding: 0 !important;
   margin: 0 !important;
 }
+
+
+/* Main CSS */
 
 body {
   font-family: "Roboto", "Inter", monospace;
@@ -79,13 +84,13 @@ img {
   margin: 10px auto;
 }
 
-
 .leaderboard-table {
   width: 90%;
   border: 2px solid white;
   text-transform: uppercase;
   caption-side: top;
   border-collapse: separate;
+  border-radius: 10px;
   border-spacing: 0;
 }
 
@@ -108,16 +113,43 @@ img {
   display: inline-block;
   outline: 0.5px solid white;
 }
+
 .leaderboard-table thead {
   background: #6D6DAE;
 }
 
 .leaderboard-table tbody {
-  background: #6d6dae86;
+  background: #6d6dae9d;
 }
 
-.leaderboard-table tr {
-  border-bottom: 2px solid white;
+.leaderboard-table td,
+.leaderboard-table th {
+  padding: 0.7rem !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.leaderboard-table tr td,
+.leaderboard-table tr th {
+  border-bottom: 2px solid white !important;
+}
+
+.leaderboard-table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+.leaderboard-table thead th:first-child {
+  border-top-left-radius: 10px;
+}
+.leaderboard-table thead th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.leaderboard-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+.leaderboard-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
 }
 
 thead,
@@ -125,7 +157,7 @@ tbody,
 th,
 tr,
 td {
-  padding: 0.5rem;
+  padding: 0.7rem;
 }
 
 

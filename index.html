@@ -176,7 +176,7 @@
             data.linearGradientBackgroundColors?.startColor &&
             data.linearGradientBackgroundColors?.endColor
           ) {
-            page.style.background = `linear-gradient(to right, ${data.linearGradientBackgroundColors?.startColor}, ${data.linearGradientBackgroundColors?.endColor})`;
+            page.style.background = `linear-gradient(${data.linearGradientBackgroundColors?.startColor}, ${data.linearGradientBackgroundColors?.endColor})`;
           } else {
             page.style.background = data.bgColorHexCode;
           }
@@ -347,7 +347,7 @@
                         <div class="winners-highlight-color"></div>
                       </div>
                     </caption>
-                    <thead>
+                    <thead style="background-color: #6D6DAE;">
                       <tr>
                         <th>Rank</th>
                         <th>Name</th>
@@ -366,7 +366,7 @@
           <article class="podium-section">
             <div class="row">
               <div class="col-12 text-center podium img-container">
-                <img class="podium-section-img" src="" alt="Podium image" />
+                <img class="podium-section-img w-100" src="" alt="Podium image" />
               </div>
             </div>
           </article>
