@@ -145,23 +145,45 @@
         try {
           document.body.style.color = data.fontColorHexCode;
           document.title = data.pageTitle;
-          headerLogoImg.src = data.headerLogo;
-          heroSectionImg.src = data.heroSectionImg;
           headings.forEach((heading) => {
             heading.style.color = data.headingColorHexCode;
           });
           leaderboardHeader.textContent = data.leaderboardHeaderTxt;
-          winnersHighlightLabel.style.backgroundColor =
-            data.winnersHighlightColor;
+          winnersHighlightLabel.style.backgroundColor = data.winnersHighlightColor;
+
+          //For Header Logo Image
+          if(data.headerLogo){
+            headerLogoImg.src = data.headerLogo;  
+          }
+          else {
+            document.querySelector(".header").remove()
+          }
+
+          //For Hero Section Image
+          if(data.heroSectionImg){
+            heroSectionImg.src = data.heroSectionImg;  
+          }
+          else {
+            document.querySelector(".hero-section").remove()
+          }
+
+          //For Podium Image
           if(data.podiumImg){
             podiumImg.src = data.podiumImg;  
           }
           else {
             document.querySelector(".podium-section").remove()
           }
-          podiumImg.src = data.podiumImg;
-          footerBtnImg.src = data.footerBtnImg;
-          footerBtnRedirect.href = data.footerBtnRedirectionUrl;
+
+          //For Footer Button Image
+          if(data.footerBtnImg){
+            footerBtnImg.src = data.footerBtnImg;  
+            footerBtnRedirect.href = data.footerBtnRedirectionUrl;
+          }
+          else {
+            document.querySelector(".footer-btn-section").remove()
+          }
+
           tncHeader.textContent = data.tncHeaderText;
           const upDownSvg = tncBtnSvg.querySelector("svg");
           upDownSvg.style.fill = data.fontColorHexCode;
