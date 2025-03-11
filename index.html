@@ -12,39 +12,20 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/style.css" />
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-MZMT8ZVZV0");
-    </script>
 
-    <script>
-      // Google Analytics setup
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-MZMT8ZVZV0");
-
-      function gtag_report_conversion(url) {
-        gtag("event", "conversion", {
-          send_to: "AW-11033144263/h2B_CM-h1IUZEMfXgY0p",
-          event_callback: function () {
-            if (url) {
-              window.location = url;
-            }
-          },
-        });
-        return false;
-      }
-
-      function formatCurrency(amount) {
-        return `₹${amount.toLocaleString("en-IN")}`;
-      }
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "q400petnte");
     </script>
 
     <script type="module">
@@ -79,6 +60,10 @@
         return maskedId;
       }
 
+      function formatCurrency(amount) {
+        return `₹${amount.toLocaleString("en-IN")}`;
+      }
+
       //DOM elements
 
       const page = document.querySelector(".page");
@@ -101,7 +86,6 @@
       tncDiv.style.display = showTnCDiv ? "block" : "none";
 
       //Terms and Condition Toggle
-
 
       const firebaseConfig = {
         apiKey: "AIzaSyBGU66tz9RqRkPUCzuQo_WPqkdlRJ5BXPc",
@@ -345,7 +329,9 @@
                 </div>
               </div>
               <div class="col-12">
-                <div class="leaderboard d-flex justify-content-center align-items-center">
+                <div
+                  class="leaderboard d-flex justify-content-center align-items-center"
+                >
                   <table class="leaderboard-table">
                     <caption>
                       <div class="label">
