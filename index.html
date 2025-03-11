@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
+    <title>BharatNxt</title>
     <link rel="icon" type="image/x-icon" href="public/favicon.svg" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -71,7 +71,9 @@
       const heroSectionImg = document.querySelector(".hero-section-img");
       const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
       const leaderboardHeader = document.querySelector("#leaderboard-header");
-      const captionHightlightColor = document.querySelector(".caption-hightlight-color")
+      const captionHightlightColor = document.querySelector(
+        ".caption-hightlight-color"
+      );
       const podiumImg = document.querySelector(".podium-section-img");
       const tncHeader = document.querySelector(".tnc-header");
       const tncList = document.querySelector("ol.tnc");
@@ -98,8 +100,7 @@
       let docRef;
       if (!pageDataDocId || pageDataDocId.trim() === "") {
         console.error("Missing or empty 'pageData' parameter in URL.");
-      }
-      else {
+      } else {
         docRef = doc(db, "dynamic_page", pageDataDocId);
       }
       onSnapshot(docRef, (doc) => {
@@ -127,7 +128,10 @@
           leaderboardHeader.textContent = data.leaderboardHeaderTxt
             ? data.leaderboardHeaderTxt
             : "";
-          captionHightlightColor.style.backgroundColor = data.winnersHighlightColor ? data.winnersHighlightColor : data.bgColorHexCode; 
+          captionHightlightColor.style.backgroundColor =
+            data.winnersHighlightColor
+              ? data.winnersHighlightColor
+              : data.bgColorHexCode;
           //For Header Logo Image
           if (data.headerLogo) {
             headerLogoImg.src = data.headerLogo;
@@ -313,7 +317,7 @@
           <header class="row text-center">
             <div class="col-12">
               <a class="w-100" href="https://bharatnxt.in/">
-                <img class="w-100 logo" src="" alt="BharatNxt Logo Image" />
+                <img class="w-100 logo" src="" alt="BharatNxt Logo" />
               </a>
             </div>
           </header>
@@ -327,7 +331,7 @@
                 <img
                   class="hero-section-img w-100"
                   src=""
-                  alt="Hero Section image"
+                  alt="Hero Section Image"
                 />
               </div>
             </div>
@@ -375,7 +379,7 @@
                 <img
                   class="podium-section-img w-100"
                   src=""
-                  alt="Podium image"
+                  alt="Podium Section Image"
                 />
               </div>
             </div>
@@ -408,7 +412,7 @@
                   <img
                     class="footer-btn-section-img w-100"
                     src=""
-                    alt="Footer Btn Image"
+                    alt="Footer Button Image"
                   />
                 </a>
               </div>

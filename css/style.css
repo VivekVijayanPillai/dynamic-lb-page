@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 /* Rest CSS */
 
@@ -15,7 +15,6 @@
   padding: 0 !important;
   margin: 0 !important;
 }
-
 
 /* Main CSS */
 
@@ -56,7 +55,6 @@ h6 {
   font-size: 14px;
 }
 
-
 .page {
   max-width: 550px;
 }
@@ -72,8 +70,7 @@ img {
 .hero-section,
 .leaderboard-section,
 .podium-section,
-.tnc-section
-{
+.tnc-section {
   margin-bottom: 20px;
 }
 
@@ -81,11 +78,16 @@ img {
   margin: 10px auto;
 }
 
+.leaderboard {
+  width: 90%;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
 .leaderboard-table {
   border: 1px solid rgba(155, 147, 147, 0.479);
   font-weight: 500;
   caption-side: top;
-  width: 90%;
   border-collapse: separate;
   border-radius: 10px;
   border-spacing: 0;
@@ -113,7 +115,7 @@ img {
 }
 
 .leaderboard-table thead {
-  background: #6D6DAE;
+  background: #6d6dae;
 }
 
 .leaderboard-table tbody {
@@ -150,8 +152,6 @@ img {
   border-bottom-right-radius: 10px;
 }
 
-
-
 .winner-indicator-msg {
   font-weight: 300;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
@@ -183,7 +183,6 @@ ol {
   letter-spacing: 1px;
 }
 
-
 li {
   padding: 5px 5px;
 }
@@ -192,24 +191,21 @@ li::marker {
   font-variant-numeric: tabular-nums;
 }
 
-
 .tnc-container {
   width: 90%;
   margin: 0 auto;
 }
 
-
-.tnc-container h6{
+.tnc-container h6 {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: #6D6DAE;
+  background: #6d6dae;
   border: 1px solid rgba(155, 147, 147, 0.479);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
 
 .tnc-div {
   height: 15rem;
