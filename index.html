@@ -57,7 +57,6 @@
         getDoc,
       } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-
       function getParamfromUrl(paramName) {
         const docIdParam = new URLSearchParams(window.location.search);
         return docIdParam.get(paramName);
@@ -90,7 +89,6 @@
       const podiumImg = document.querySelector(".podium-section-img");
       const footerBtnImg = document.querySelector(".footer-btn-section-img");
       const tncHeader = document.querySelector(".tnc-header");
-      const tncBtnSvg = document.querySelector(".tnc-btn-svg");
       const tncList = document.querySelector("ol.tnc");
       const tncDiv = document.querySelector(".tnc-div");
       const footerBtnRedirect = document.querySelector(".footer-btn");
@@ -104,16 +102,6 @@
 
       //Terms and Condition Toggle
 
-      tncBtn.addEventListener("click", () => {
-        showTnCDiv = !showTnCDiv;
-        if (showTnCDiv) {
-          tncDiv.style.display = "block";
-          tncBtnSvg.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="#eee" viewBox="0 -960 960 960"><path d="m280-400 200-200 200 200H280Z"/></svg>`;
-        } else {
-          tncDiv.style.display = "none";
-          tncBtnSvg.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="#eee" viewBox="0 -960 960 960"><path d="M480-360 280-560h400L480-360Z"/></svg>`;
-        }
-      });
 
       const firebaseConfig = {
         apiKey: "AIzaSyBGU66tz9RqRkPUCzuQo_WPqkdlRJ5BXPc",
@@ -140,7 +128,7 @@
           console.log("No such document!");
         }
       });
-      
+
       async function updateDOM(data) {
         try {
           document.body.style.color = data.fontColorHexCode;
@@ -149,44 +137,39 @@
             heading.style.color = data.headingColorHexCode;
           });
           leaderboardHeader.textContent = data.leaderboardHeaderTxt;
-          winnersHighlightLabel.style.backgroundColor = data.winnersHighlightColor;
+          winnersHighlightLabel.style.backgroundColor =
+            data.winnersHighlightColor;
 
           //For Header Logo Image
-          if(data.headerLogo){
-            headerLogoImg.src = data.headerLogo;  
-          }
-          else {
-            document.querySelector(".header").remove()
+          if (data.headerLogo) {
+            headerLogoImg.src = data.headerLogo;
+          } else {
+            document.querySelector(".header").remove();
           }
 
           //For Hero Section Image
-          if(data.heroSectionImg){
-            heroSectionImg.src = data.heroSectionImg;  
-          }
-          else {
-            document.querySelector(".hero-section").remove()
+          if (data.heroSectionImg) {
+            heroSectionImg.src = data.heroSectionImg;
+          } else {
+            document.querySelector(".hero-section").remove();
           }
 
           //For Podium Image
-          if(data.podiumImg){
-            podiumImg.src = data.podiumImg;  
-          }
-          else {
-            document.querySelector(".podium-section").remove()
+          if (data.podiumImg) {
+            podiumImg.src = data.podiumImg;
+          } else {
+            document.querySelector(".podium-section").remove();
           }
 
           //For Footer Button Image
-          if(data.footerBtnImg){
-            footerBtnImg.src = data.footerBtnImg;  
+          if (data.footerBtnImg) {
+            footerBtnImg.src = data.footerBtnImg;
             footerBtnRedirect.href = data.footerBtnRedirectionUrl;
-          }
-          else {
-            document.querySelector(".footer-btn-section").remove()
+          } else {
+            document.querySelector(".footer-btn-section").remove();
           }
 
           tncHeader.textContent = data.tncHeaderText;
-          const upDownSvg = tncBtnSvg.querySelector("svg");
-          upDownSvg.style.fill = data.fontColorHexCode;
           const termsAndCondition = data.tnc;
           tncList.innerHTML = "";
           termsAndCondition.forEach((tnc, index) => {
@@ -331,10 +314,7 @@
         <div class="container-fluid">
           <header class="row text-center">
             <div class="col-12">
-              <a
-                class="w-100"
-                href="https://bharatnxt.in/"
-              >
+              <a class="w-100" href="https://bharatnxt.in/">
                 <img class="w-100 logo" src="" alt="BharatNxt Logo Image" />
               </a>
             </div>
@@ -346,7 +326,11 @@
           <article class="hero-section">
             <div class="row">
               <div class="col-12 text-center img-container">
-                <img class="hero-section-img w-100" src="" alt="Hero Section image" />
+                <img
+                  class="hero-section-img w-100"
+                  src=""
+                  alt="Hero Section image"
+                />
               </div>
             </div>
           </article>
@@ -369,7 +353,7 @@
                         <div class="winners-highlight-color"></div>
                       </div>
                     </caption>
-                    <thead style="background-color: #6D6DAE;">
+                    <thead style="background-color: #6d6dae">
                       <tr>
                         <th>Rank</th>
                         <th>Name</th>
@@ -388,7 +372,11 @@
           <article class="podium-section">
             <div class="row">
               <div class="col-12 text-center podium img-container">
-                <img class="podium-section-img w-100" src="" alt="Podium image" />
+                <img
+                  class="podium-section-img w-100"
+                  src=""
+                  alt="Podium image"
+                />
               </div>
             </div>
           </article>
@@ -396,31 +384,21 @@
       </section>
       <section class="footer">
         <div class="container-fluid">
-          <article class="tnc-section" style="margin-bottom: 1rem;">
+          <article class="tnc-section">
             <div class="row">
               <div class="col-12">
-                <div class="tnc-btn">
+                <div class="tnc-container">
                   <h6 class="tnc-header text-center"></h6>
-                  <span class="open-close-icon">
-                    <div class="tnc-btn-svg">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 -960 960 960"
-                      >
-                        <path d="M480-360 280-560h400L480-360Z" />
-                      </svg>
-                    </div>
-                  </span>
-                </div>
-                <div class="tnc-div">
-                  <ol
-                    class="tnc d-flex flex-column justify-content-center"
-                  ></ol>
+                  <div class="tnc-div">
+                    <ol
+                      class="tnc d-flex flex-column justify-content-center"
+                    ></ol>
+                  </div>
                 </div>
               </div>
             </div>
           </article>
-          <article class="footer-btn-section" style="position: fixed; bottom: 0;">
+          <article class="footer-btn-section">
             <footer class="row">
               <div class="col-12 text-center">
                 <a
@@ -428,7 +406,7 @@
                   href="https://bharatnxt.page.link/BusinessPayeeBottomSheet"
                 >
                   <img
-                    class="footer-btn-section-img"
+                    class="footer-btn-section-img w-100"
                     src=""
                     alt="Footer Btn Image"
                   />

@@ -22,7 +22,6 @@
 body {
   font-family: "Roboto", "Inter", monospace;
   font-size: 10px;
-  font-weight: 500;
   color: #000;
   background-color: #fff;
   letter-spacing: 0.1em;
@@ -76,7 +75,8 @@ img {
 
 .hero-section,
 .leaderboard-section,
-.podium-section 
+.podium-section,
+.tnc-section
 {
   margin-bottom: 20px;
 }
@@ -88,11 +88,12 @@ img {
 .leaderboard-table {
   width: 90%;
   border: 1px solid rgba(155, 147, 147, 0.479);
-  text-transform: uppercase;
+  font-weight: 500;
   caption-side: top;
   border-collapse: separate;
   border-radius: 10px;
   border-spacing: 0;
+  overflow-x: auto;
 }
 
 .leaderboard-table caption {
@@ -189,6 +190,8 @@ td:nth-child(4) {
 ol {
   width: 95%;
   margin: 0 auto;
+  font-weight: 200;
+  letter-spacing: 2px;
 }
 
 ol {
@@ -203,36 +206,46 @@ li::marker {
   font-variant-numeric: tabular-nums;
 }
 
-.tnc-section {
+
+.tnc-container {
   width: 90%;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
-.tnc-section h6 {
+
+.tnc-container h6{
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  background: #6D6DAE;
+  border: 1px solid rgba(155, 147, 147, 0.479);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
-.tnc-btn{
-  display: grid;
-  grid-template-columns: 0.92fr 0.08fr;
-  border: 1px solid white;
-}
-
-.open-close-icon{
-  border-left: 1px solid white;
-}
-
-.tnc-svg svg {
-  width: 1rem;
-  height: 1rem;
-}
 
 .tnc-div {
-  border: 1px solid white;
+  height: 15rem;
+  overflow-y: auto;
+  background: #6d6dae96;
+  border: 1px solid rgba(155, 147, 147, 0.479);
   border-top: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
+
+.tnc-div::-webkit-scrollbar {
+  width: 8px;
+}
+.tnc-div::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.tnc-div::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
 /* Media Queries */
 
 @media (max-width: 355px) {
