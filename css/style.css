@@ -21,10 +21,9 @@
 
 body {
   font-family: "Roboto", "Inter", monospace;
-  font-size: 14px;
+  font-size: 13px;
   color: #000;
   background-color: #fff;
-  letter-spacing: 0.1em;
 }
 
 /* Typography */
@@ -83,10 +82,10 @@ img {
 }
 
 .leaderboard-table {
-  width: 90%;
   border: 1px solid rgba(155, 147, 147, 0.479);
   font-weight: 500;
   caption-side: top;
+  width: 90%;
   border-collapse: separate;
   border-radius: 10px;
   border-spacing: 0;
@@ -123,7 +122,7 @@ img {
 
 .leaderboard-table td,
 .leaderboard-table th {
-  padding: 6px !important;
+  padding: 9px !important;
   border: none !important;
   box-shadow: none !important;
 }
@@ -151,13 +150,6 @@ img {
   border-bottom-right-radius: 10px;
 }
 
-thead,
-tbody,
-th,
-tr,
-td {
-  padding: 0.7rem;
-}
 
 
 .winner-indicator-msg {
@@ -191,9 +183,6 @@ ol {
   letter-spacing: 1px;
 }
 
-ol {
-  font-variant-numeric: tabular-nums;
-}
 
 li {
   padding: 5px 5px;
