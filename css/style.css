@@ -21,7 +21,7 @@
 
 body {
   font-family: "Roboto", "Inter", monospace;
-  font-size: 12px;
+  font-size: 14px;
   color: #000;
   background-color: #fff;
   letter-spacing: 0.1em;
@@ -86,7 +86,6 @@ img {
   width: 90%;
   border: 1px solid rgba(155, 147, 147, 0.479);
   font-weight: 500;
-  font-size: 13px;
   caption-side: top;
   border-collapse: separate;
   border-radius: 10px;
@@ -98,7 +97,7 @@ img {
   color: white;
   caption-side: top;
   text-align: right;
-  font-size: 8px;
+  font-size: 0.5rem;
 }
 
 .leaderboard-table caption .label {
@@ -231,6 +230,7 @@ li::marker {
   border-top: none;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  font-size: 12px;
 }
 
 .tnc-div::-webkit-scrollbar {
@@ -248,7 +248,7 @@ li::marker {
 
 @media (max-width: 365px) {
   body {
-    font-size: 8px;
+    font-size: 12px;
   }
 }
 
