@@ -79,13 +79,14 @@ img {
 }
 
 .leaderboard {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   overflow-x: auto;
 }
 
 .leaderboard-table {
   border: 1px solid rgba(155, 147, 147, 0.479);
+  width: 90%;
   font-weight: 500;
   caption-side: top;
   border-collapse: separate;
