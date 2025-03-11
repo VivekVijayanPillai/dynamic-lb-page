@@ -297,7 +297,7 @@
                 newCell.style.textAlign = "center";
 
                 document.getElementById("loader").style.display = "none";
-                document.querySelector(".leaderboard").style.display = "block";
+                document.querySelector(".leaderboard").style.display = "flex";
               } catch (error) {
                 console.error("Error fetching leaderboard data:", error);
               }
@@ -339,16 +339,16 @@
           <article class="leaderboard-section">
             <div class="row">
               <div class="col-12 text-center">
-                <h1 id="leaderboard-header"></h1>
+                <h3 id="leaderboard-header"></h3>
               </div>
               <div id="loader" class="col-12 text-center">
-                <div class="spinner-border text-light" role="status">
+                <div class="spinner-border text-primary" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </div>
               <div class="col-12">
                 <div
-                  class="leaderboard d-flex justify-content-center align-items-center"
+                  class="leaderboard justify-content-center align-items-center"
                 >
                   <table class="leaderboard-table">
                     <caption>
