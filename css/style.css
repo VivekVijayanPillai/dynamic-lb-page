@@ -105,11 +105,11 @@ img {
   justify-content: end;
 }
 
-.leaderboard-table caption .winners-highlight-color {
+.leaderboard-table caption .caption-hightlight-color {
   height: 0.5rem;
   width: 0.5rem;
   display: inline-block;
-  outline: 0.5px solid white;
+  outline: 0.1px solid rgba(155, 147, 147, 0.479);
 }
 
 .leaderboard-table thead {

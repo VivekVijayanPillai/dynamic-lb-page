@@ -71,19 +71,12 @@
       const heroSectionImg = document.querySelector(".hero-section-img");
       const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
       const leaderboardHeader = document.querySelector("#leaderboard-header");
+      const captionHightlightColor = document.querySelector(".caption-hightlight-color")
       const podiumImg = document.querySelector(".podium-section-img");
-      const footerBtnImg = document.querySelector(".footer-btn-section-img");
       const tncHeader = document.querySelector(".tnc-header");
       const tncList = document.querySelector("ol.tnc");
-      const tncDiv = document.querySelector(".tnc-div");
+      const footerBtnImg = document.querySelector(".footer-btn-section-img");
       const footerBtnRedirect = document.querySelector(".footer-btn");
-      const winnersHighlightLabel = document.querySelector(
-        ".winners-highlight-color"
-      );
-      const tncBtn = document.querySelector(".tnc-btn");
-
-      let showTnCDiv = true;
-      tncDiv.style.display = showTnCDiv ? "block" : "none";
 
       //Terms and Condition Toggle
 
@@ -102,12 +95,19 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
       const pageDataDocId = getParamfromUrl("pageData");
-      const docRef = doc(db, "dynamic_page", pageDataDocId);
-
+      let docRef;
+      if (!pageDataDocId || pageDataDocId.trim() === "") {
+        console.error("Missing or empty 'pageData' parameter in URL.");
+      }
+      else {
+        docRef = doc(db, "dynamic_page", pageDataDocId);
+      }
       onSnapshot(docRef, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
-          updateDOM(data);
+          if (data) {
+            updateDOM(data);
+          }
         } else {
           console.log("No such document!");
         }
@@ -115,15 +115,19 @@
 
       async function updateDOM(data) {
         try {
-          document.body.style.color = data.fontColorHexCode;
-          document.title = data.pageTitle;
+          document.body.style.color = data.fontColorHexCode
+            ? data.fontColorHexCode
+            : "#000";
+          document.title = data.pageTitle ? data.pageTitle : "BharatNxt";
           headings.forEach((heading) => {
-            heading.style.color = data.headingColorHexCode;
+            heading.style.color = data.headingColorHexCode
+              ? data.headingColorHexCode
+              : "#000";
           });
-          leaderboardHeader.textContent = data.leaderboardHeaderTxt;
-          winnersHighlightLabel.style.backgroundColor =
-            data.winnersHighlightColor;
-
+          leaderboardHeader.textContent = data.leaderboardHeaderTxt
+            ? data.leaderboardHeaderTxt
+            : "";
+          captionHightlightColor.style.backgroundColor = data.winnersHighlightColor ? data.winnersHighlightColor : data.bgColorHexCode; 
           //For Header Logo Image
           if (data.headerLogo) {
             headerLogoImg.src = data.headerLogo;
@@ -153,12 +157,14 @@
             document.querySelector(".footer-btn-section").remove();
           }
 
-          tncHeader.textContent = data.tncHeaderText;
-          const termsAndCondition = data.tnc;
-          tncList.innerHTML = "";
+          tncHeader.textContent = data.tncHeaderText
+            ? data.tncHeaderText
+            : "Terms And Condition";
+          const termsAndCondition = data.tnc ? data.tnc : [];
+          tncList.textContent = "";
           termsAndCondition.forEach((tnc, index) => {
             const list = document.createElement("li");
-            list.innerHTML = tnc;
+            list.textContent = tnc;
             tncList.appendChild(list);
           });
           if (
@@ -206,84 +212,92 @@
 
           if (docSnap.exists()) {
             let data = docSnap.data();
-            cohortId = data.cohortId;
-            startDate = convertTimestampToDate(data.startDate.toDate());
-            endDate = convertTimestampToDate(data.endDate.toDate());
-            totalWinners = data.totalWinners;
-            thresholdAmount = data.thresholdAmount;
-            const response = await fetch(
-              "https://staging.bharatnxt.in/bnxt_report/admin_dashboard/getLeaderboardByCohort",
-              {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                  "Content-Type": "application/json",
-                  Accept: "application/json",
-                },
-                body: JSON.stringify({
-                  cohortId: cohortId,
-                  startDate: startDate,
-                  endDate: endDate,
-                }),
-              }
-            );
-            const result = await response.json();
-            let winnersCount = 0;
+            if (data) {
+              cohortId = data.cohortId;
+              startDate = convertTimestampToDate(data.startDate.toDate());
+              endDate = convertTimestampToDate(data.endDate.toDate());
+              totalWinners = data.totalWinners;
+              thresholdAmount = data.thresholdAmount;
 
-            if (result.status === 200 && result.data) {
-              const tbody = document.querySelector(".leaderboard table tbody");
-              tbody.innerHTML = "";
+              try {
+                const response = await fetch(
+                  "https://staging.bharatnxt.in/bnxt_report/admin_dashboard/getLeaderboardByCohort",
+                  {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                      cohortId: cohortId,
+                      startDate: startDate,
+                      endDate: endDate,
+                    }),
+                  }
+                );
+                const result = await response.json();
+                let winnersCount = 0;
+                if (result.status === 200 && result.data) {
+                  const tbody = document.querySelector(
+                    ".leaderboard table tbody"
+                  );
+                  tbody.innerHTML = "";
 
-              result.data.forEach((entry, index) => {
-                const row = document.createElement("tr");
-                const isTop3 = index < totalWinners;
-                const isOver11Lakhs =
-                  entry.total_payee_amount >= thresholdAmount;
-                const shouldHighlight = isTop3 && isOver11Lakhs;
+                  result.data.forEach((entry, index) => {
+                    const row = document.createElement("tr");
+                    const isTop3 = index < totalWinners;
+                    const isOver11Lakhs =
+                      entry.total_payee_amount >= thresholdAmount;
+                    const shouldHighlight = isTop3 && isOver11Lakhs;
 
-                row.innerHTML = `
+                    row.innerHTML = `
                     <td>#${entry.rank}</td>
                     <td class="name">${entry.name}</td>
                     <td>${maskUniqueId(entry.user_id)}</td>
                     <td>${formatCurrency(entry.total_payee_amount)}</td>
                     `;
 
-                tbody.appendChild(row);
+                    tbody.appendChild(row);
 
-                if (shouldHighlight) {
-                  winnersCount++;
-                  const tableRows = row.querySelectorAll(`td`);
-                  tableRows.forEach((tableRow, index) => {
-                    tableRow.style.color = winnersHighlightColor || "#FFC54A";
+                    if (shouldHighlight) {
+                      winnersCount++;
+                      const tableRows = row.querySelectorAll(`td`);
+                      tableRows.forEach((tableRow, index) => {
+                        tableRow.style.color =
+                          winnersHighlightColor || "#FFC54A";
+                      });
+                    }
                   });
                 }
-              });
-            }
-            const table = document.querySelector(".leaderboard table");
-            let newCell;
-            if (winnersCount > 0) {
-              const newRow = table.insertRow(winnersCount + 1);
-              newCell = newRow.insertCell(0);
-              newCell.innerHTML = `
-                <div class="d-flex justify-content-evenly align-items-center">
-                  <span class="winner-indicator-msg">${winnersZoneMessage}</span>
-                </div>
-              `;
-            } else {
-              const newRow = table.insertRow(1);
-              newCell = newRow.insertCell(0);
-              newCell.innerHTML = `
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                  <span class="winner-indicator-msg">${noWinnersZoneMessage}</span>
-                </div>
-              `;
-            }
+                const table = document.querySelector(".leaderboard table");
+                let newCell;
+                if (winnersCount > 0) {
+                  const newRow = table.insertRow(winnersCount + 1);
+                  newCell = newRow.insertCell(0);
+                  newCell.innerHTML = `
+                    <div class="d-flex justify-content-evenly align-items-center">
+                      <span class="winner-indicator-msg">${winnersZoneMessage}</span>
+                    </div>
+                  `;
+                } else {
+                  const newRow = table.insertRow(1);
+                  newCell = newRow.insertCell(0);
+                  newCell.innerHTML = `
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                      <span class="winner-indicator-msg">${noWinnersZoneMessage}</span>
+                    </div>
+                  `;
+                }
+                newCell.colSpan = 4;
+                newCell.style.textAlign = "center";
 
-            newCell.colSpan = 4;
-            newCell.style.textAlign = "center";
-
-            document.getElementById("loader").style.display = "none";
-            document.querySelector(".leaderboard").style.display = "block";
+                document.getElementById("loader").style.display = "none";
+                document.querySelector(".leaderboard").style.display = "block";
+              } catch (error) {
+                console.error("Error fetching leaderboard data:", error);
+              }
+            }
           }
         } catch (error) {
           console.error("Error fetching leaderboard data:", error);
@@ -336,7 +350,7 @@
                     <caption>
                       <div class="label">
                         <span>* Winners are highlighted by &nbsp;</span>
-                        <div class="winners-highlight-color"></div>
+                        <div class="caption-hightlight-color"></div>
                       </div>
                     </caption>
                     <thead style="background-color: #6d6dae">
