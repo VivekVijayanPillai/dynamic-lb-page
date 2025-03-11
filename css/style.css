@@ -63,6 +63,7 @@ h6 {
 
 .page {
   max-width: 550px;
+  position: relative;
 }
 
 img {
@@ -86,7 +87,7 @@ img {
 
 .leaderboard-table {
   width: 90%;
-  border: 2px solid white;
+  border: 1px solid rgba(155, 147, 147, 0.479);
   text-transform: uppercase;
   caption-side: top;
   border-collapse: separate;
@@ -119,7 +120,7 @@ img {
 }
 
 .leaderboard-table tbody {
-  background: #6d6dae38;
+  background: #6d6dae96;
 }
 
 .leaderboard-table td,
@@ -131,7 +132,7 @@ img {
 
 .leaderboard-table tr td,
 .leaderboard-table tr th {
-  border-bottom: 2px solid white !important;
+  border-bottom: 1px solid rgba(155, 147, 147, 0.479) !important;
 }
 
 .leaderboard-table tbody tr:last-child td {
