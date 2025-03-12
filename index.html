@@ -257,10 +257,10 @@
 
                   result.data.forEach((entry, index) => {
                     const row = document.createElement("tr");
-                    const isTop3 = index < totalWinners;
-                    const isOver11Lakhs =
+                    const isTop = index < totalWinners;
+                    const isOverThreshold =
                       entry.total_payee_amount >= thresholdAmount;
-                    const shouldHighlight = isTop3 && isOver11Lakhs;
+                    const shouldHighlight = isTop && isOverThreshold;
 
                     row.innerHTML = `
                     <td>#${entry.rank}</td>
