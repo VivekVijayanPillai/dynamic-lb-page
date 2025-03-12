@@ -107,6 +107,7 @@
         if (doc.exists()) {
           const data = doc.data();
           if (data) {
+            console.log(data);
             updateDOM(data);
           }
         } else {
@@ -136,21 +137,21 @@
           if (data.headerLogo) {
             headerLogoImg.src = data.headerLogo;
           } else {
-            document.querySelector(".header").remove();
+            document.querySelector(".header").style.display = "none";
           }
 
           //For Hero Section Image
           if (data.heroSectionImg) {
             heroSectionImg.src = data.heroSectionImg;
           } else {
-            document.querySelector(".hero-section").remove();
+            document.querySelector(".hero-section").style.display = "none";
           }
 
           //For Podium Image
           if (data.podiumImg) {
             podiumImg.src = data.podiumImg;
           } else {
-            document.querySelector(".podium-section").remove();
+            document.querySelector(".podium-section").style.display = "none";
           }
 
           //For Footer Button Image
@@ -158,7 +159,7 @@
             footerBtnImg.src = data.footerBtnImg;
             footerBtnRedirect.href = data.footerBtnRedirectionUrl;
           } else {
-            document.querySelector(".footer-btn-section").remove();
+            document.querySelector(".footer-btn-section").style.display = "none";
           }
 
           tncHeader.textContent = data.tncHeaderText
@@ -168,8 +169,10 @@
           tncList.textContent = "";
           termsAndCondition.forEach((tnc, index) => {
             const list = document.createElement("li");
-            list.textContent = tnc;
-            tncList.appendChild(list);
+            if(tnc){
+              list.textContent = tnc;
+              tncList.appendChild(list);
+            }
           });
           if (
             data.linearGradientBackgroundColors?.startColor &&
