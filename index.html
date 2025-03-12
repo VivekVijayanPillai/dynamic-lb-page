@@ -11,6 +11,12 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/style.css" />
 
     <script type="text/javascript">
@@ -107,7 +113,6 @@
         if (doc.exists()) {
           const data = doc.data();
           if (data) {
-            console.log(data);
             updateDOM(data);
           }
         } else {
@@ -159,7 +164,8 @@
             footerBtnImg.src = data.footerBtnImg;
             footerBtnRedirect.href = data.footerBtnRedirectionUrl;
           } else {
-            document.querySelector(".footer-btn-section").style.display = "none";
+            document.querySelector(".footer-btn-section").style.display =
+              "none";
           }
 
           tncHeader.textContent = data.tncHeaderText
@@ -169,7 +175,7 @@
           tncList.textContent = "";
           termsAndCondition.forEach((tnc, index) => {
             const list = document.createElement("li");
-            if(tnc){
+            if (tnc) {
               list.textContent = tnc;
               tncList.appendChild(list);
             }
